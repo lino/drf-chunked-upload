@@ -34,7 +34,7 @@ class ChunkedUploadBaseView(GenericAPIView):
         """
         queryset = self.model.objects.all()
         if USER_RESTRICTED:
-            if self.request.user.is_authenticated():
+            if self.request.user.is_authenticated:
                 queryset = queryset.filter(user=self.request.user)
         return queryset
 
@@ -161,7 +161,7 @@ class ChunkedUploadView(ListModelMixin, RetrieveModelMixin,
             end = int(match.group('end'))
             total = int(match.group('total'))
 
-        chunk_size = end - start + 1
+        chunk_size = end - start
         max_bytes = self.get_max_bytes(request)
 
         if max_bytes is not None and total > max_bytes:
